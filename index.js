@@ -87,3 +87,17 @@ app.put('/Put-data/:id', (req, res) => {
         }
 
 });
+app.delete('/Delete-data/:id', (req, res) => {
+    const id = req.params.id 
+    const NewId= parseInt(id);
+    const toyIndex = toys.findIndex(t => t.id === NewId);
+    if (toyIndex === -1) {
+        return res.status(404).json({ "msg": `toy with id ${NewId} Not Found` });
+    }else{
+        toys.splice(toyIndex, 1);
+res.json({
+  msg: `toy with id ${NewId} Deleted Successfully`,
+  toys: toys
+});    }
+
+});
