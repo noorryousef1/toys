@@ -29,12 +29,12 @@ const toys = [
     },
     { 
         id: 3, 
-        name: 'Action Figure', 
+        name: "Action Figure", 
         price: 14.99,
-        category: 'Figures',
-        manufacturer: 'Hasbro',
+        category: "Figures",
+        manufacturer: "Hasbro",
         inStock: true,
-        description: 'A poseable action figure with accessories.'
+        description: "A poseable action figure with accessories."
     }
 ];
 app.get('/Get-data', (req, res) => {
@@ -52,5 +52,19 @@ app.get('/Get-data/:id', (req, res) => {
     });
 
 app.post('/Post-data', (req, res) => {  
-    
-  });
+    const {name , price,category,manufacturer,inStock,description} = req.body;
+    if (name === undefined)return res.status(400).json({ "msg": 'Name is required' });
+    if (price === undefined)return res.status(400).json({ "msg": 'Price is required' });
+    if (category === undefined)return res.status(400).json({ "msg": 'Category is required' });
+    if (manufacturer === undefined)return res.status(400).json({ "msg": 'Manufacturer is required' });
+    if (inStock === undefined)return res.status(400).json({ "msg": 'InStock is required' });
+    if (description === undefined)return res.status(400).json({ "msg": 'Description is required' });
+
+    const newToy = {
+        id: toys.length + 1,
+        name,  price,category,manufacturer,inStock,description
+    };
+    toys.push(newToy);
+    res.status(201).json(newToy);
+}
+);
