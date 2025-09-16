@@ -68,3 +68,22 @@ app.post('/Post-data', (req, res) => {
     res.status(201).json(newToy);
 }
 );
+app.put('/Put-data/:id', (req, res) => {
+        const {name , price,category,manufacturer,inStock,description} = req.body;
+        const idToUpdate = parseInt(req.params.id);
+        const toyIndex = toys.findIndex(t => t.id === idToUpdate);
+        if (toyIndex === -1) {
+            return res.status(404).json({ "msg": `toy with id ${idToUpdate} Not Found` });
+        }else{
+            const toyToUpdate = toys[toyIndex];
+            if (name !== undefined) toyToUpdate.name = name;
+            if (price !== undefined) toyToUpdate.price = price;
+            if (category !== undefined) toyToUpdate.category = category;
+            if (manufacturer !== undefined) toyToUpdate.manufacturer = manufacturer;
+            if (inStock !== undefined) toyToUpdate.inStock = inStock;
+            if (description !== undefined) toyToUpdate.description = description;
+            toys[toyIndex] = toyToUpdate;
+            res.json(toyToUpdate);
+        }
+
+});
